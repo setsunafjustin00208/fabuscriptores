@@ -1,68 +1,148 @@
-# CodeIgniter 4 Application Starter
+# fabuscriptores
 
-## What is CodeIgniter?
+## Purpose
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+**fabuscriptores** is a writer community-driven platform for storytellers to create meaningful fictional stories with limitless collaboration. The platform empowers users to write, share, and collaborate on stories, fostering a creative and supportive environment for writers of all backgrounds.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+---
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Tech Stack
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- **Frontend:** [Vue 3](https://vuejs.org/) (JavaScript)
+- **Backend:** [CodeIgniter 4](https://codeigniter.com/) (PHP 8.4)
+- **Database:** [MongoDB](https://www.mongodb.com/)
 
-## Installation & updates
-
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
-
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+---
 
 ## Setup
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+1. **Clone the repository:**
+   ```sh
+   git clone <your-repo-url>
+   cd fabuscriptores
+   ```
 
-## Important Change with index.php
+2. **Backend Setup (CodeIgniter 4):**
+   - Copy `env` to `.env` and configure your environment variables, especially:
+     - `app.baseURL`
+     - MongoDB connection:  
+       ```
+       mongodb.default.connectionstring = mongodb://localhost:27017
+       mongodb.default.database = fabuscriptores
+       ```
+   - Install PHP dependencies:
+     ```sh
+     composer install
+     ```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+3. **Frontend Setup (Vue 3):**
+   - Navigate to the `resources` folder (if present) and install dependencies:
+     ```sh
+     cd resources
+     npm install
+     ```
+   - Run the development server:
+     ```sh
+     npm run dev
+     ```
+   - For production build:
+     ```sh
+     npm run build
+     ```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+4. **Database Setup (MongoDB):**
+   - Ensure MongoDB is running and accessible at the connection string specified in your `.env`.
 
-**Please** read the user guide for a better explanation of how CI4 works!
+5. **Running the Application:**
+   - Start the backend server (from the project root):
+     ```sh
+     php spark serve
+     ```
+   - Access the frontend via the Vite dev server or after building, through the backend's public directory.
 
-## Repository Management
+---
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+## Directory Structure
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+- `app/Controllers` - Backend controllers (API endpoints)
+- `app/Libraries` - Custom PHP libraries (e.g., MongoDB integration)
+- `app/Modules` - Modular structure for features (controllers, models, views)
+- `app/Views` - Backend-rendered views
+- `resources/` - Vue 3 frontend source code
+- `public/` - Public web root (entry point for web server)
 
-## Server Requirements
+---
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+## CLI Commands
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+### Default CodeIgniter 4 Commands
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+You can use the built-in CodeIgniter CLI tool, `spark`, for many tasks:
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+- `php spark serve`  
+  Start the local development server.
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+- `php spark migrate`  
+  Run all new migrations.
+
+- `php spark db:seed`  
+  Seed the database.
+
+- `php spark routes`  
+  List all defined routes.
+
+- `php spark help`  
+  List all available commands.
+
+See [CodeIgniter 4 User Guide - CLI](https://codeigniter.com/user_guide/cli/cli.html) for more.
+
+---
+
+### Custom fabuscriptores Commands
+
+#### Create Command
+
+The `create` command helps you scaffold new components for your project:
+
+- **Create a View:**  
+  ```
+  php spark create view MyView
+  ```
+  - Prompts for an optional subdirectory under `app/Views`.
+
+- **Create a Library:**  
+  ```
+  php spark create library MyLibrary
+  ```
+  - Prompts for an optional subdirectory under `app/Libraries`.
+  - Generates a PHP class with the given name.
+
+- **Create a Module:**  
+  ```
+  php spark create module Blog
+  ```
+  - Creates a new module under `app/Modules/Blog` with default `Controllers`, `Models`, and `Views` folders.
+  - Generates a default controller, model, and view for the module.
+
+---
+
+## Testing
+
+- Backend tests use PHPUnit.
+- To run tests:
+  ```sh
+  vendor\bin\phpunit
+  ```
+- Configure your test database in `.env` or `app/Config/Database.php`.
+
+---
+
+## Contribution
+
+Contributions are welcome! Please fork the repository and submit a pull request.
+
+---
+
+## License
+
+This project is open-source and available under the MIT License.
